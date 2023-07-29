@@ -1,6 +1,13 @@
+
+
+
 .expense-list{
   
   list-style: none;
 
 
+
+}
+.expenses{
+  border: 2px solid green;
 }
