@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monthly Expense Report</title>
+  <link rel="stylesheet" href="index.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center flex-column ">
+    <div class="expenses p-3 text-bg-secondary ">
+      <form id="add-items" class="text-white" >
+        <label for="ExpenseAmount"  class="form-label">Choose the expense Amount : </label>
+        <input type="number" id="ExpenseAmount" class="form-control ">
+        <label for="Discription" class=" form-label">Choose the discription :</label>
+        <input type="text" id="Discription" class="form-control"> 
+        <label for="Category" class="form-label">Choose the Category :</label>
+        <select  class="form-select" name="Category" id="Category" >
+          <option value="Movies">Movies</option>
+          <option value="Electricity">Electricity</option>
+          <option value="Gas">Gas</option>
+          <option value="Water">Water</option>
+          <option value="Internet">Internet</option>
+          <option value="Phone">Phone</option>
+          <option value="Studing">Studing</option>
+        </select>
+        <button class="btn btn-dark  m-2">Add Expense</button>
+      </form>
+    </div>
+    <div class="display mt-2 w-50 ">
+      <ul id="items" class=" mt-2 w-100 ">
+    
+      </ul>
+    </div>
+  </div>
+  <script src="index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>
