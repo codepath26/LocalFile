@@ -1,5 +1,5 @@
 // getting the Data From DOM
- let expenses = [];
+let expenses = [];
 let amount = document.getElementById("ExpenseAmount");
 
 let description = document.getElementById("Description");
@@ -109,3 +109,5 @@ function DisplayData  (){
 function addlocal (){
   localStorage.setItem("expenses" , JSON.stringify(expenses));
 }
+
+
