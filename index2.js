@@ -1,5 +1,6 @@
 // getting the Data From DOM
 let expenses = [];
+let ids = [];
 let amount = document.getElementById("ExpenseAmount");
 
 let description = document.getElementById("Description");
@@ -9,7 +10,7 @@ let items = document.getElementById("items");
 
 addExpense.addEventListener("submit", addData);
 items.addEventListener("click", modified);
-window.addEventListener("load", getdataFromLocalStorage);
+window.addEventListener("DOMContentLoaded", getdataFromLocalStorage);
 function getdataFromLocalStorage() {
   axios
     .get(
@@ -18,13 +19,15 @@ function getdataFromLocalStorage() {
     .then((response) => {
 
       response.data.forEach((obj) => {
-     
+        // console.log(obj._id)
+        ids.push(obj._id)
         DisplayData(obj);
       });
     })
     .catch((err) => console.log(err));
 
 }
+console.log(ids)
 function addData(e) {
   e.preventDefault();
   let item = document.createElement("li");
@@ -42,12 +45,14 @@ function addData(e) {
       obj
     )
     .then((response) => {
-      console.log(response.data);
+      // console.log(response.data);
       item.appendChild(
         document.createTextNode(
           `Amount :${response.data.Amount}, Description :${response.data.Description}, Category : ${response.data.Category}`
         )
       );
+      ids.push(response.data._id)
+      console.log(ids)
     })
     .catch((err) => console.log(err));
   let deletButton = document.createElement("button");
@@ -73,38 +78,41 @@ function modified(e) {
     let index = Array.from(li.parentNode.children).indexOf(li);
 
     if (index !== -1) {
-      expenses.splice(index, 1);
-    }
-    addlocal();
-    items.removeChild(li);
-  }
-  if (e.target.classList.contains("edit")) {
-    let li = e.target.parentElement;
-    let index = Array.from(li.parentNode.children).indexOf(li);
+       let id = ids[index];
+      
+        axios.delete(`https://crudcrud.com/api/cc9df701b8d64374a616416bea1cc085/expenseData/${id}`).then(()=>{
+          ids.splice(index, 1);
+          console.log(ids)
+         items.removeChild(li);
+       }) 
 
-    let expense = expenses[index];
-    amount.value = expense.Amount;
-    description.value = expense.Description;
-    category.value = expense.Category;
-    if (index !== -1) {
-      expenses.splice(index, 1);
     }
-    addlocal();
-    items.removeChild(li);
+    
   }
+  // if (e.target.classList.contains("edit")) {
+  //   let li = e.target.parentElement;
+  //   let index = Array.from(li.parentNode.children).indexOf(li);
+
+  //   let expense = expenses[index];
+  //   amount.value = expense.Amount;
+  //   description.value = expense.Description;
+  //   category.value = expense.Category;
+  //   if (index !== -1) {
+  //     expenses.splice(index, 1);
+  //   }
+  //   addlocal();
+  //   items.removeChild(li);
+  // }
 }
 
-// use to display the data from the array
 function DisplayData(obj) {
-  console.log(obj.Amount);
-  // items.innerHTML = "";
+ 
 
   let item = document.createElement("li");
   item.classList.add("list-group-item");
   item.appendChild(
     document.createTextNode(
-      // `Amount : ${expense.Amount}, Description :${expense.Description}, Category : ${expense.Category}`
-      // console.log("hey")
+
       `Amount :${obj.Amount}, Description :${obj.Description}, Category : ${obj.Category}`
     )
   );
@@ -119,35 +127,10 @@ function DisplayData(obj) {
   item.appendChild(deletButton);
   items.appendChild(item);
 }
-// expenses.forEach((expense)=>{
-//   let item = document.createElement('li');
-//   item.classList.add("list-group-item");
-//   item.appendChild(
-//     document.createTextNode(
-//       // `Amount : ${expense.Amount}, Description :${expense.Description}, Category : ${expense.Category}`
-//       // console.log("hey")
-//       `Amount :${obj.Amount}, Description :${obj.Description}, Category : ${obj.Category}`
-//     )
-//   )
-//   let deletButton = document.createElement('button');
-//   deletButton.classList = "btn btn-danger btn-sm float-end delete mx-1";
-//   deletButton.appendChild(document.createTextNode("Delete"));
-
-//   let editButton = document.createElement('button');
-//   editButton.classList = "btn btn-success btn-sm mx-1 edit float-end"
-//   editButton.appendChild(document.createTextNode('Edit'));
-//   item.appendChild(editButton);
-//   item.appendChild(deletButton);
-//   items.appendChild(item);
-// });
-
-// }
 
 // adding to local storage
 function addlocal() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
-// function addlocal (){
 
-// }
