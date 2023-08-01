@@ -104,6 +104,9 @@ function modified(e) {
         console.log(ids)
         items.removeChild(li);
         
+        
+      }).then(()=>{
+        axios.delete(`https://crudcrud.com/api/56f181beaa6145918c6ca477e347056b/expenseData/${id}`)
       })
     }
    
