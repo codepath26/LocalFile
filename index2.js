@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", getdataFromLocalStorage);
 function getdataFromLocalStorage() {
   axios
     .get(
-      "https://crudcrud.com/api/cc9df701b8d64374a616416bea1cc085/expenseData"
+      "https://crudcrud.com/api/56f181beaa6145918c6ca477e347056b/expenseData"
     )
     .then((response) => {
 
@@ -41,7 +41,7 @@ function addData(e) {
 
   axios
     .post(
-      "https://crudcrud.com/api/cc9df701b8d64374a616416bea1cc085/expenseData",
+      "https://crudcrud.com/api/56f181beaa6145918c6ca477e347056b/expenseData",
       obj
     )
     .then((response) => {
@@ -80,7 +80,7 @@ function modified(e) {
     if (index !== -1) {
        let id = ids[index];
       
-        axios.delete(`https://crudcrud.com/api/cc9df701b8d64374a616416bea1cc085/expenseData/${id}`).then(()=>{
+        axios.delete(`https://crudcrud.com/api/56f181beaa6145918c6ca477e347056b/expenseData/${id}`).then(()=>{
           ids.splice(index, 1);
           console.log(ids)
          items.removeChild(li);
@@ -89,20 +89,25 @@ function modified(e) {
     }
     
   }
-  // if (e.target.classList.contains("edit")) {
-  //   let li = e.target.parentElement;
-  //   let index = Array.from(li.parentNode.children).indexOf(li);
+  if (e.target.classList.contains("edit")) {
+    let li = e.target.parentElement;
+    let index = Array.from(li.parentNode.children).indexOf(li);
 
-  //   let expense = expenses[index];
-  //   amount.value = expense.Amount;
-  //   description.value = expense.Description;
-  //   category.value = expense.Category;
-  //   if (index !== -1) {
-  //     expenses.splice(index, 1);
-  //   }
-  //   addlocal();
-  //   items.removeChild(li);
-  // }
+
+    if (index !== -1) {
+      let id = ids[index];
+      axios.get(`https://crudcrud.com/api/56f181beaa6145918c6ca477e347056b/expenseData/${id}`).then((response)=>{
+          amount.value = response.data.Amount;
+          description.value = response.data.Description;
+          category.value = response.data.Category;
+        ids.splice(index, 1);
+        console.log(ids)
+        items.removeChild(li);
+        
+      })
+    }
+   
+  }
 }
 
 function DisplayData(obj) {
